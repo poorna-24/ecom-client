@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import ErrorComponent from "../../ErrorMsg/ErrorMsg";
+import { useDispatch, useSelector } from "react-redux";
+
+import { registerUserAction } from "../../../redux/slices/users/usersSlice";
+import LoadingComponent from "../../LoadingComp/LoadingComponent";
+import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 
 const RegisterForm = () => {
   //dispatch
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
@@ -18,15 +24,18 @@ const RegisterForm = () => {
   //---onsubmit handler----
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    dispatch(registerUserAction({ fullname, email, password }));
   };
   //select store data
+  const { user, error, loading } = useSelector((state) => state?.users);
 
-  //select store data
-  const { loading, userAuth } = {};
   //redirect
-  if (userAuth?.userInfo?.status) {
-    window.location.href = "/login";
-  }
+  // if (user) {
+  //   window.location.href = "/login";
+  // }
+  // if (userAuth?.userInfo?.status) {
+  //   window.location.href = "/login";
+  // }
 
   return (
     <>
@@ -35,14 +44,9 @@ const RegisterForm = () => {
           <div className="flex flex-wrap items-center">
             <div className="w-full lg:w-2/6 px-4 mb-12 lg:mb-0">
               <div className="py-20 text-center">
-                <h3 className="mb-8 text-4xl md:text-5xl font-bold font-heading">
-                  Signing up with social is super quick
-                </h3>
+                <h3 className="mb-8 text-4xl md:text-5xl font-bold font-heading">Signing up with social is super quick</h3>
                 {/* errr */}
-                {/* Error */}
-                {userAuth?.error?.message && (
-                  <ErrorComponent message={userAuth?.error?.message} />
-                )}
+                {error && <ErrorMsg message={error?.message} />}
                 <p className="mb-10">Please, do not hesitate</p>
                 <form onSubmit={onSubmitHandler}>
                   <input
@@ -69,12 +73,7 @@ const RegisterForm = () => {
                     type="password"
                     placeholder="Enter your password"
                   />
-                  <button
-                    // disable the button if loading is true
-                    disabled={loading}
-                    className="mt-12 md:mt-16 bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">
-                    {loading ? "Loading..." : "Register"}
-                  </button>
+                  {loading ? <LoadingComponent /> : <button className="mt-12 md:mt-16 bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">Register</button>}
                 </form>
               </div>
             </div>
@@ -83,8 +82,7 @@ const RegisterForm = () => {
         <div
           className="hidden lg:block lg:absolute top-0 bottom-0 right-0 lg:w-3/6 bg-center bg-cover bg-no-repeat"
           style={{
-            backgroundImage:
-              'url("https://cdn.pixabay.com/photo/2017/03/29/04/47/high-heels-2184095_1280.jpg")',
+            backgroundImage: 'url("https://cdn.pixabay.com/photo/2017/03/29/04/47/high-heels-2184095_1280.jpg")',
           }}
         />
       </section>

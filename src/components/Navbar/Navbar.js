@@ -12,6 +12,10 @@ export default function Navbar() {
 
   //get cart items from local storage
   let cartItemsFromLocalStorage;
+  //get login user from localStorage
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+  const isLoggedIn = user?.token ? true : false;
+
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -59,17 +63,17 @@ export default function Navbar() {
                   ))} */}
                   {categoriesToDisplay?.length <= 0 ? (
                     <>
-                      <a href={`${baseURL}/products?category=clothing`} className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
-                        Clothing...
-                      </a>
+                      <Link to="/products?category=clothing" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Clothing
+                      </Link>
 
-                      <a href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
-                        Men
-                      </a>
+                      <Link href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Mens
+                      </Link>
 
-                      <a href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                      <Link href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
                         Women
-                      </a>
+                      </Link>
                     </>
                   ) : (
                     categoriesToDisplay?.map((category) => {
@@ -86,16 +90,21 @@ export default function Navbar() {
 
                 {/* mobile links register/login */}
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                  <div className="flow-root">
-                    <Link to="/register" className="-m-2 block p-2 font-medium text-gray-900">
-                      Create an account
-                    </Link>
-                  </div>
-                  <div className="flow-root">
-                    <Link to="/login" className="-m-2 block p-2 font-medium text-gray-900">
-                      Sign in
-                    </Link>
-                  </div>
+                  {!isLoggedIn && (
+                    <>
+                      {" "}
+                      <div className="flow-root">
+                        <Link to="/register" className="-m-2 block p-2 font-medium text-gray-900">
+                          Create an account.
+                        </Link>
+                      </div>
+                      <div className="flow-root">
+                        <Link to="/login" className="-m-2 block p-2 font-medium text-gray-900">
+                          Sign in
+                        </Link>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4"></div>
@@ -113,13 +122,17 @@ export default function Navbar() {
               <p className="flex-1 text-center text-sm font-medium text-white lg:flex-none">Get free delivery on orders over $100</p>
 
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                <Link to="/register" className="text-sm font-medium text-white hover:text-gray-100">
-                  Create an account
-                </Link>
-                <span className="h-6 w-px bg-gray-600" aria-hidden="true" />
-                <Link to="/login" className="text-sm font-medium text-white hover:text-gray-100">
-                  Sign in
-                </Link>
+                {!isLoggedIn && (
+                  <>
+                    <Link to="/register" className="text-sm font-medium text-white hover:text-gray-100">
+                      Create an account
+                    </Link>
+                    <span className="h-6 w-px bg-gray-600" aria-hidden="true" />
+                    <Link to="/login" className="text-sm font-medium text-white hover:text-gray-100">
+                      Sign in
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -143,17 +156,17 @@ export default function Navbar() {
                       <div className="flex h-full justify-center space-x-8">
                         {categoriesToDisplay?.length <= 0 ? (
                           <>
-                            <a href={`${baseURL}/products?category=clothing`} className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
-                              Clothing...
-                            </a>
+                            <Link href={`${baseURL}/products?category=clothing`} className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                              Clothing.
+                            </Link>
 
-                            <a href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                            <Link href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
                               Men
-                            </a>
+                            </Link>
 
-                            <a href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                            <Link href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
                               Women
-                            </a>
+                            </Link>
                           </>
                         ) : (
                           categoriesToDisplay?.map((category) => {
@@ -186,11 +199,13 @@ export default function Navbar() {
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
                       <div className="flex space-x-8">
-                        <div className="flex">
-                          <Link to="/customer-profile" className="-m-2 p-2 text-gray-400 hover:text-gray-500">
-                            <UserIcon className="h-6 w-6" aria-hidden="true" />
-                          </Link>
-                        </div>
+                        {!isLoggedIn && (
+                          <div className="flex">
+                            <Link to="/customer-profile" className="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                              <UserIcon className="h-6 w-6" aria-hidden="true" />
+                            </Link>
+                          </div>
+                        )}
                       </div>
 
                       <span className="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true" />
