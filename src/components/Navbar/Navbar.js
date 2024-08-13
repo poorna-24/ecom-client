@@ -14,6 +14,7 @@ export default function Navbar() {
   let cartItemsFromLocalStorage;
   //get login user from localStorage
   const user = JSON.parse(localStorage.getItem("userInfo"));
+
   const isLoggedIn = user?.token ? true : false;
 
   return (
@@ -92,7 +93,6 @@ export default function Navbar() {
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   {!isLoggedIn && (
                     <>
-                      {" "}
                       <div className="flow-root">
                         <Link to="/register" className="-m-2 block p-2 font-medium text-gray-900">
                           Create an account.
@@ -137,7 +137,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Deskto Navigation */}
+          {/* Desktop Navigation */}
           <div className="bg-white">
             <div className="border-b border-gray-200">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -146,7 +146,11 @@ export default function Navbar() {
                   <div className="hidden lg:flex lg:items-center">
                     <Link to="/">
                       <span className="sr-only">Your Company</span>
-                      <img className="h-32 pt-2 w-auto" src={logo} alt="i-novotek logo" />
+                      {/* <img className="h-32 pt-2 w-auto" src={logo} alt="i-novotek logo" /> */}
+                      <Link to="/" className="font-bold dark:text-white text-4xl">
+                        <span className="px-2 py-1 bg-gradient-to-r from-orange-400 via-yellow-400 to-green-300 rounded-lg text-white">Chandu's</span>
+                        Blog
+                      </Link>
                     </Link>
                   </div>
 
@@ -192,7 +196,11 @@ export default function Navbar() {
                   </div>
                   {/* logo */}
                   <Link to="/" className="lg:hidden">
-                    <img className="h-32 mt-2 w-auto" src={logo} alt="i-novotek logo" />
+                    {/* <img className="h-32 mt-2 w-auto" src={logo} alt="i-novotek logo" /> */}
+                    <Link to="/" className="font-bold dark:text-white text-4xl">
+                      <span className="px-2 py-1 bg-gradient-to-r from-orange-400 via-yellow-400 to-green-300 rounded-lg text-white">Chandu's</span>
+                      Blog
+                    </Link>
                   </Link>
 
                   {/* login profile icon mobile */}

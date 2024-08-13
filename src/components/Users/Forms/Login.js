@@ -46,6 +46,7 @@ const Login = () => {
                 <h3 className="mb-8 text-4xl md:text-5xl font-bold font-heading">Login to your account</h3>
                 <p className="mb-10 font-semibold font-heading">Happy to see you again</p>
                 {error && <ErrorMsg message={error?.message} />}
+                {/* {error && <p>invaild</p>} */}
                 <form className="flex flex-wrap -mx-4" onSubmit={onSubmitHandler}>
                   <div className="w-full md:w-1/2 px-4 mb-8 md:mb-12">
                     <label>
@@ -73,12 +74,12 @@ const Login = () => {
                 </form>
               </div>
             </div>
-            <div
+            {/* <div
               className="w-full md:w-2/6 h-128 md:h-auto flex items-center lg:items-end px-4 pb-20 bg-cover bg-no-repeat"
               style={{
                 backgroundImage: 'url("https://cdn.pixabay.com/photo/2017/03/29/04/47/high-heels-2184095_1280.jpg")',
               }}
-            ></div>
+            ></div> */}
           </div>
         </div>
       </section>

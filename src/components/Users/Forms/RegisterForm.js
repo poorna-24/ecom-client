@@ -24,11 +24,12 @@ const RegisterForm = () => {
   //---onsubmit handler----
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    console.log({ fullname, email, password });
     dispatch(registerUserAction({ fullname, email, password }));
   };
   //select store data
   const { user, error, loading } = useSelector((state) => state?.users);
-
+  console.log(user);
   //redirect
   // if (user) {
   //   window.location.href = "/login";
