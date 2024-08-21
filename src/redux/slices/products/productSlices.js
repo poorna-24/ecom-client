@@ -13,22 +13,32 @@ const initialState = {
 };
 
 //create product action
-export const createproductAction = createAsyncThunk("product/create", async (payload, { rejectWithValue, getState, dispatch }) => {
+export const createProductAction = createAsyncThunk("product/create", async (payload, { rejectWithValue, getState, dispatch }) => {
   try {
     const { name, description, category, sizes, brand, colors, price } = payload;
     //make request
     //token-authenticated
     //images
-    const { data } = await axios.post(`${baseURL}/products`, {
-      name,
-      description,
-      category,
-      sizes,
-      brand,
-      colors,
-      price,
-    });
-    const token = getState()?.users;
+    const { data } = await axios.post(
+      `${baseURL}/products`,
+      {
+        name,
+        description,
+        category,
+        sizes,
+        brand,
+        colors,
+        price,
+      },
+      config
+    );
+    const token = getState()?.users?.userAuth?.userInfo?.token;
+    const config = {
+      headers: {
+        Authorization: `chandu ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    };
     return data;
   } catch (error) {
     return rejectWithValue(error?.response?.data);
@@ -41,12 +51,15 @@ const productSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     //create
-    builder.addCase(createproductAction.pending, (state, action) => {
+    builder.addCase(createProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(createProductAction.fulfilled, (state, action) => {
       state.loading = false;
       state.product = action.payload;
       state.isAdded = true;
     });
-    builder.addCase(createproductAction.rejected, (state, action) => {
+    builder.addCase(createProductAction.rejected, (state, action) => {
       state.loading = false;
       state.product = null;
       state.isAdded = false;
