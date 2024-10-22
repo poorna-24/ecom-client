@@ -207,7 +207,7 @@ export default function Navbar() {
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
                       <div className="flex space-x-8">
-                        {!isLoggedIn && (
+                        {isLoggedIn && (
                           <div className="flex">
                             <Link to="/customer-profile" className="-m-2 p-2 text-gray-400 hover:text-gray-500">
                               <UserIcon className="h-6 w-6" aria-hidden="true" />

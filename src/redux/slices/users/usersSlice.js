@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"; //createAsyncThunk it is used to handle async actions & createAction is used for asynchoronous actions
 import axios from "axios";
 import baseURL from "../../../utils/baseURL";
 import { resetErrorAction } from "../globalActions/globalActions";
@@ -91,4 +91,5 @@ const userSlice = createSlice({
 
 //generate reducer
 const usersReducer = userSlice.reducer;
+
 export default usersReducer;
