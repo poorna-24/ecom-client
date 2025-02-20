@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import Select from "react-select"; // react-select.com
 import makeAnimated from "react-select/animated";
 
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
@@ -15,7 +15,7 @@ import { fetchColorsAction } from "../../../redux/slices/categories/colorsSlice"
 const animatedComponents = makeAnimated();
 
 export default function AddProduct() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); //instance of dispatch
   //files
   const [files, setFiles] = useState([]);
   const [fileErrs, setFileErrs] = useState([]);
@@ -43,7 +43,7 @@ export default function AddProduct() {
     setSizeOption(sizes);
   };
   //converted sizes
-  const sizeOptionsCoverted = sizes?.map((size) => {
+  const sizeOptionsConverted = sizes?.map((size) => {
     return { value: size, label: size };
   });
   //categories
@@ -71,6 +71,7 @@ export default function AddProduct() {
   const {
     colors: { colors },
   } = useSelector((state) => state?.colors);
+  // console.log(colors);
   useEffect(() => {
     dispatch(fetchColorsAction());
   }, [dispatch]);
@@ -96,7 +97,7 @@ export default function AddProduct() {
     sizes: "",
     brand: "",
     colors: "",
-    images: "",
+    // images: "",
     price: "",
     totalQty: "",
   });
@@ -109,10 +110,27 @@ export default function AddProduct() {
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(files);
+    // console.log(files);
+    // console.log(colorsOption);
+
     //dispatch
-    dispatch(createProductAction(formData));
+    // dispatch(createProductAction(formData));
+    dispatch(
+      createProductAction({
+        ...formData,
+        files,
+        colors: colorsOption?.map((color) => color.label),
+        sizes: sizeOption?.map((size) => size.label),
+      })
+    );
+
     // console.log(formData);
+    // console.log({
+    //   ...formData,
+    //   files,
+    //   colors: colorsOption?.map((color) => color.label),
+    //   sizes: sizeOption?.map((size) => size.name),
+    // });
     //reset form data
     // setFormData({
     //   name: "",
@@ -160,7 +178,7 @@ export default function AddProduct() {
                   components={animatedComponents}
                   isMulti
                   name="sizes"
-                  options={sizeOptionsCoverted}
+                  options={sizeOptionsConverted}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   isClearable={true}
@@ -249,7 +267,8 @@ export default function AddProduct() {
                           className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
                         >
                           <span>Upload files</span>
-                          <input name="images" value={formData.images} onChange={handleOnChange} type="file" />
+                          {/* <input name="images" value={formData.images} onChange={handleOnChange} type="file" /> */}
+                          <input name="images" value={formData.images} onChange={fileHandleChange} type="file" />
                         </label>
                       </div>
                       <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>

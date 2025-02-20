@@ -1,4 +1,4 @@
-import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 //reset error action
 export const resetErrorAction = createAsyncThunk("resetErr-Action", () => {

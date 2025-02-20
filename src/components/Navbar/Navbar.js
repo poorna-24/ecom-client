@@ -65,7 +65,7 @@ export default function Navbar() {
                   {categoriesToDisplay?.length <= 0 ? (
                     <>
                       <Link to="/products?category=clothing" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
-                        Clothing
+                        Clothing...
                       </Link>
 
                       <Link href="/" className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">

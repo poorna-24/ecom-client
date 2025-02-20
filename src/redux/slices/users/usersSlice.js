@@ -36,7 +36,7 @@ export const registerUserAction = createAsyncThunk("users/register", async ({ fu
 //login action
 export const loginUserAction = createAsyncThunk("users/login", async ({ email, password }, { rejectWithValue, getState, dispatch }) => {
   try {
-    //make http req
+    //make http request
     const { data } = await axios.post(`${baseURL}/users/login`, {
       email,
       password,

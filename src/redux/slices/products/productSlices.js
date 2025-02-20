@@ -14,24 +14,11 @@ const initialState = {
 
 //create product action
 export const createProductAction = createAsyncThunk("product/create", async (payload, { rejectWithValue, getState, dispatch }) => {
+  // console.log(payload);
   try {
-    const { name, description, category, sizes, brand, colors, price } = payload;
+    const { name, description, category, sizes, brand, colors, price, totalQty, files } = payload;
     //make request
     //token-authenticated
-    //images
-    const { data } = await axios.post(
-      `${baseURL}/products`,
-      {
-        name,
-        description,
-        category,
-        sizes,
-        brand,
-        colors,
-        price,
-      },
-      config
-    );
     const token = getState()?.users?.userAuth?.userInfo?.token;
     const config = {
       headers: {
@@ -39,6 +26,42 @@ export const createProductAction = createAsyncThunk("product/create", async (pay
         "Content-Type": "multipart/form-data",
       },
     };
+    //images
+    //FormData
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("brand", brand);
+    formData.append("price", price);
+    formData.append("totalQty", totalQty);
+
+    sizes.forEach((size) => {
+      formData.append("sizes", size);
+    });
+    colors.forEach((color) => {
+      formData.append("colors", color);
+    });
+
+    files.forEach((file) => {
+      formData.append("files", file);
+    });
+    const { data } = await axios.post(
+      `${baseURL}/products`,
+      // {
+      //   name,
+      //   description,
+      //   category,
+      //   sizes,
+      //   brand,
+      //   colors,
+      //   price,
+      // },
+      formData,
+      config
+    );
+
     return data;
   } catch (error) {
     return rejectWithValue(error?.response?.data);

@@ -18,7 +18,6 @@ export const createCategoryAction = createAsyncThunk("category/create", async (p
     const { name } = payload;
     //make request
     //token-authenticated
-    //images
     const token = getState()?.users?.userAuth?.userInfo?.token;
     const config = {
       headers: {

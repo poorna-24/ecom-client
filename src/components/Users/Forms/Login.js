@@ -27,13 +27,14 @@ const Login = () => {
 
   //get data from store
   const { error, loading, userInfo } = useSelector((state) => state?.users?.userAuth);
+  useSelector((state) => console.log(state.users.userAuth));
 
-  // //redirect
-  // if (userInfo?.userFound?.isAdmin) {
-  //   window.location.href = "/admin";
-  // } else {
-  //   window.location.href = "/customer-profile";
-  // }
+  //redirect
+  if (userInfo?.userFound?.isAdmin) {
+    window.location.href = "/admin";
+  } else {
+    // window.location.href = "/customer-profile";
+  }
 
   return (
     <>
@@ -46,7 +47,7 @@ const Login = () => {
                 <h3 className="mb-8 text-4xl md:text-5xl font-bold font-heading">Login to your account</h3>
                 <p className="mb-10 font-semibold font-heading">Happy to see you again</p>
                 {error && <ErrorMsg message={error?.message} />}
-                {/* {error && <p>invaild</p>} */}
+                {/* {error && <p>{error.message}</p>} */}
                 <form className="flex flex-wrap -mx-4" onSubmit={onSubmitHandler}>
                   <div className="w-full md:w-1/2 px-4 mb-8 md:mb-12">
                     <label>
